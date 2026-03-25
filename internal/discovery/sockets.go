@@ -29,10 +29,10 @@ var tcpStates = map[string]string{
 }
 
 // ParseProcNetTCP reads and parses TCP socket entries from the given /proc path.
-func ParseProcNetTCP(path string) ([]SockEntry, error) {
-	f, err := os.Open(path)
+func ParseProcNetTCP() ([]SockEntry, error) {
+	f, err := os.Open("/proc/net/tcp")
 	if err != nil {
-		return nil, fmt.Errorf("open %s: %w", path, err)
+		return nil, fmt.Errorf("open %s: %w", "/proc/net/tcp", err)
 	}
 	defer f.Close()
 
