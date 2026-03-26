@@ -25,7 +25,7 @@ func main() {
 }
 
 func scan() {
-	entries, err := discovery.ParseProcNetTCP()
+	entries, err := discovery.ParseProcNetTCP("/proc/net/tcp", discovery.ProtoTCP)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -38,10 +38,7 @@ func scan() {
 	fmt.Fprintf(w, "LOCAL\tREMOTE\tSTATE\tPROCESS\n")
 	for _, e := range entries {
 		pid := inodeMap[e.Inode]
-		info, err := discovery.GetProcessInfo(pid)
-		if err != nil {
-			continue
-		}
+		info := discovery.GetProcessInfo(pid)
 		fmt.Fprintf(w, "%s:%d\t%s:%d\t%s\t%s\n",
 			e.LocalIP, e.LocalPort,
 			e.RemoteIP, e.RemotePort,
