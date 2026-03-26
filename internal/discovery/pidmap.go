@@ -23,7 +23,7 @@ func InodeToProcess() (map[uint64]int, error) {
 		if err != nil {
 			continue
 		}
-		
+
 		fdPath := filepath.Join("/proc", proc.Name(), "fd")
 		fds, err := os.ReadDir(fdPath)
 		if err != nil {
